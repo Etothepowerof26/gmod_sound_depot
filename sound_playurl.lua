@@ -143,24 +143,6 @@ SoundDL.QueueDownload("https://raw.githubusercontent.com/Etothepowerof26/gmod_so
 SoundDL.QueueDownload("https://raw.githubusercontent.com/Etothepowerof26/gmod_sound_depot/master/spider/spidermonster_threat2.wav", print)
 ]]
 
-sound.PlayURL = function (url, options, cb)
-	if SoundDL.FileExists(url) then 
-		sound.PlayFile ("data/" .. SoundDL.GetFName(url), options, cb or function() end)
-	else
-		SoundDL.QueueDownload(
-			url,
-			function (success, fname)
-				if success then
-					sound.PlayURL (url, options, cb)
-					return
-				end 
-
-				error ("downloading from url failed:\n" .. url .. "\n("..fname..")")
-			end
-		)
-	end
-end
-
 surface.PlayURLSound = function (url, cb)
 	if SoundDL.FileExists(url) then
 		sound.PlayFile ("data/" .. SoundDL.GetFName(url), "noblock", function (bass)
